@@ -11,7 +11,6 @@ async function display (){
   const res = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`);
   
   const result = await res.json();
-  console.log(result)
 
     return result;
 }
@@ -20,7 +19,7 @@ async function display (){
 
 async function showPost(){
     const posts= await display();
-    posts = posts.map((post)=> {
+    posts.map((post)=> {
         const postEl = document.createElement('div');
         postEl.classList.add('post');
         postEl.innerHTML =`
@@ -54,6 +53,19 @@ async function showPost(){
 
 function filterPost(e){
   const term =e.target.value.toUpperCase();
+  const posts = document.querySelectorAll('.post');
+  posts.forEach((post) =>{
+    const title = post.querySelector('.post-title').innerText.toUpperCase();
+    const body = post.querySelector('.post-body').innerText.toUpperCase();
+
+    if(title.indexOf(term) > -1 || body.indexOf(term) > -1){
+       post.style.display ='flex';
+    }else{
+        post.style.display ='none';
+    }
+
+  })
+  
 }
 
 
